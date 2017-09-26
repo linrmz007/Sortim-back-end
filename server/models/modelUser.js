@@ -33,7 +33,7 @@ UserSchema.statics.getOtherUsers = function (eventId) {
 const User = mongoose.model('users', UserSchema, 'sortimUsers');
 
 User.createUser = async (authObj) => {
-  const user = new User({accessToken:authObj.accessToken, name:authObj.name, id:authObj.id, email:authObj.email, img: authObj.img, events: []});
+  const user = new User({accessToken:authObj.accessToken, name:authObj.name, id:authObj.id, email:authObj.email, img: authObj.picture.data.url, events: []});
   return await user.save();
 }
 

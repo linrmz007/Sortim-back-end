@@ -25,7 +25,6 @@ exports.saveEvents = async (req, res) => {
 
 exports.getOtherUsers = async (req, res) => {
   try {
-    console.log(req.params.eventId);
     res.send(await User.getOtherUsers(req.params.eventId));
   } catch (e) {
     res.sendStatus(500);

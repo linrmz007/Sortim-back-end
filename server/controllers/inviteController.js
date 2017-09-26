@@ -16,12 +16,3 @@ exports.invite = async (req, res) => {
     res.sendStatus(500);
   }
 }
-
-exports.checkForInvite = async (req, res) => {
-  try {
-    await Invite.checkForInvite(req.body.currentUser, req.body.otherUser);
-    res.sendStatus(200);
-  } catch (e) {
-    res.sendStatus(500);
-  }
-}
