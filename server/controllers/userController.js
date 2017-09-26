@@ -4,9 +4,9 @@ const User = require('../models/modelUser');
 
 exports.auth = async (req, res) => {
   try {
-    const user = await model.checkUserExists(req.body.id);
-    if (user === null) await model.createUser(req.body)
-    else await model.updateAccessToken(req.body.accessToken)
+    const user = await User.checkUserExists(req.body.id);
+    if (user === null) await User.createUser(req.body);
+    else await user.updateAccessToken(req.body.accessToken);
     res.sendStatus(200);
   } catch (e) {
     res.sendStatus(500);
@@ -15,7 +15,8 @@ exports.auth = async (req, res) => {
 
 exports.saveEvents = async (req, res) => {
   try {
-    await model.saveEvents(req.body.userId, req.body.events);
+    const user = await User.checkUserExists(req.body.userId)
+    await user.saveEvents(req.body.events);
     res.sendStatus(200);
   } catch (e) {
     res.sendStatus(500);
@@ -24,7 +25,8 @@ exports.saveEvents = async (req, res) => {
 
 exports.getOtherUsers = async (req, res) => {
   try {
-    res.send(await model.getOtherUsers(req.params.eventId));
+    console.log(req.params.eventId);
+    res.send(await User.getOtherUsers(req.params.eventId));
   } catch (e) {
     res.sendStatus(500);
   }
