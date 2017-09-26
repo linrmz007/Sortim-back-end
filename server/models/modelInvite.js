@@ -20,9 +20,11 @@ InviteSchema.statics.checkForInvite = function (inviteId) {
   return this.findOne({id:inviteId});
 }
 
-const Invite = mongoose.model('invites', InviteSchema, 'sortimInvites');
-
-exports.createInvite = async (inviteId, eventId) => {
+InviteSchema.statics.createInvite = async (inviteId, eventId) => {
   const invite = new Invite({id:inviteId, eventId: eventId});
   await invite.save();
 }
+
+const Invite = mongoose.model('invites', InviteSchema, 'sortimInvites');
+
+module.exports = Invite;
