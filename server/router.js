@@ -10,6 +10,5 @@ router.post('/login', userController.auth);
 router.post('/events', userController.saveEvents);
 router.get('/events/:eventId', userController.getOtherUsers);
 router.post('/events/:eventId', inviteController.invite);
-router.post('/events/:eventId/:otherUserId', inviteController.sendEmail);
 
 module.exports = router;
