@@ -7,23 +7,14 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
  service: 'gmail',
  auth: {
-        user: 'annacollins85@gmail.com',
-        pass: 'Snowboard14'
+        user: //put gmail password here
+        pass: //put password here
     }
 });
 
-const emailBody = `Hello ...! ... swiped right and wants to connect with you on Sortim. Here's their email address ...`;
-
-const mailOptions = {
-  from: 'annacollins85@gmail.com',
-  to: 'annacollins85@gmail.com',
-  subject: 'Someone on Sortim wants to connect with you',
-  text: emailBody
-};
-
 exports.invite = async (req, res) => {
   try {
-    const id = Invite.createId(req.body.otherUser, req.body.currentUser);
+    const id = Invite.createId(req.body.otherUser.email, req.body.currentUser.email);
     const invite = await Invite.checkForInvite(id);
     if (invite === null) {
       await Invite.createInvite(id, req.params.eventId);
@@ -32,7 +23,12 @@ exports.invite = async (req, res) => {
       return res.sendStatus(200);
     }
     else {
-      transporter.sendMail(mailOptions, function (err, info) {
+      transporter.sendMail({
+        from: req.body.otherUser[0],
+        to: //put email address of current user here
+        subject: 'Someone on Sortim wants to connect with you',
+        text: `Hello ${req.body.currentUser.name}! Someone swiped right and wants to connect with you on Sortim. Here's their email address ${req.body.otherUser.email}`
+      }, function (err, info) {
         if (err) console.log(err);
         else console.log(info);
       })
