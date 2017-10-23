@@ -7,8 +7,8 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
  service: 'gmail',
  auth: {
-        user: //put gmail password here
-        pass: //put password here
+        user: 'annacollins85@gmail.com',
+        pass: 'CodingCathy368!'
     }
 });
 
@@ -25,7 +25,7 @@ exports.invite = async (req, res) => {
     else {
       transporter.sendMail({
         from: req.body.otherUser[0],
-        to: //put email address of current user here
+        to: 'annacollins85@gmail.com',
         subject: 'Someone on Sortim wants to connect with you',
         text: `Hello ${req.body.currentUser.name}! Someone swiped right and wants to connect with you on Sortim. Here's their email address ${req.body.otherUser.email}`
       }, function (err, info) {
