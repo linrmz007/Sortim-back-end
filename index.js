@@ -1,6 +1,7 @@
 'use strict';
 //express
 const express = require('express');
+const morgan = require('morgan');
 const app = express();
 //socketIO
 const Server = require('http').Server;
@@ -14,12 +15,13 @@ const cors = require('cors');
 require('./db');
 const corsOptions = {origin:'http://localhost:3000'};
 
+app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(cors(corsOptions))
 app.use(router);
 
 socketEvents(io);
-app.listen(3001, function () {
-    console.log('server running at localhost:3001');
-  })
+server.listen(3001, function () {
+  console.log('server running at localhost:3001');
+})
