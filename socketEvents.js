@@ -27,7 +27,7 @@ module.exports = (io) => {
       const roomId = modelInvite.createId(data.room.ourId, data.room.theirId, data.room.eventId);
       let room = rooms[roomId]
       if(!room) {
-        // Send error
+        // throw error;
       } else {
         const otherSocket = Array.from(room.sockets).find(el => el !== socket);
         console.log(otherSocket);
@@ -37,16 +37,7 @@ module.exports = (io) => {
         })
       }
     })
-
-     // setInterval(() => {
-     //   console.log('Emitting Marco…');
-     //   socket.emit('ACTION', {
-     //     type: 'SET_NEW_DATE',
-     //     data: {
-     //       time: new Date()
-     //     }
-     //   });
-     // }, 1000);
+    
      socket.on('GET_MESSAGE', async (data) => {
        console.log('GET-MSG', data);
        socket.emit('ACTION', {
