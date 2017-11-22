@@ -12,10 +12,12 @@ module.exports = (io) => {
       if(!room) {
         console.log('Creating room with id', roomId);
         rooms[roomId] = {
-          sockets: new Set([socket])
+          sockets: {
+            [data.ourId.toString()]: socket
+          }
         }
       } else {
-        rooms[roomId].sockets.add(socket)
+        rooms[roomId].sockets[data.ourId.toString()] = socket;
       }
       console.log('User joined room', roomId);
     })
@@ -29,8 +31,12 @@ module.exports = (io) => {
       if(!room) {
         // Send error
       } else {
-        const otherSocket = Array.from(room.sockets).find(el => el !== socket);
-        console.log(otherSocket);
+        console.log(data.room.ourId.toString());
+        console.log(room);
+        console.log(Object.keys(room.sockets));
+        const otherId = Object.keys(room.sockets).find(id => id.toString() !== data.room.ourId.toString());
+        const otherSocket = rooms[roomId].sockets[otherId];
+        console.log('othersocket', otherSocket);
         otherSocket.emit('ACTION', {
           type: 'MESSAGE_RECEIVED',
           data
