@@ -10,6 +10,7 @@ const UserSchema = new Schema ({
   email: String,
   img: String,
   events: [String],
+  appeared:[String],
 });
 
 UserSchema.statics.checkUserExists = function (userId) {
