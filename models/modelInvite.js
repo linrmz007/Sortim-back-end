@@ -11,9 +11,14 @@ const InviteSchema = new Schema ({
 
 InviteSchema.index({id:1, eventId:1}, {unique:true})
 
-InviteSchema.statics.createId = function (id1, id2) {
-  if (id1 < id2) return id1 + 'v' + id2;
-  else return id2 + 'v' + id1;
+InviteSchema.statics.createId = function (id1, id2, eventId) {
+  let id = id1 < id2
+    ? id1 + 'v' + id2
+    : id2 + 'v' + id1;
+
+  if (eventId) id += `v${eventId}`
+
+  return id;
 }
 
 InviteSchema.statics.checkForInvite = function (inviteId) {
